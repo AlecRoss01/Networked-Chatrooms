@@ -19,6 +19,13 @@ func makeConn() {
 		fmt.Print(val)
 	return
 	}
+	readConn(conn)
+}
+
+func readConn(c net.Conn) {
+	reader := bufio.NewReader(c)
+	message, _ := reader.ReadString('\n')
+	fmt.Println(message)
 }
 
 func readInput() string {

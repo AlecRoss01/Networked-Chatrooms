@@ -33,6 +33,14 @@ func thirdPerson(text string, name string) string {
 	return ""
 }
 
+func coinFlip() string {
+	return ""
+}
+
+func diceRoll() int {
+	return 0
+}
+
 func main() {
 	makeConn()
 }

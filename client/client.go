@@ -29,6 +29,10 @@ func readInput() string {
 	return text
 }
 
+func thirdPerson(text string, name string) string {
+	return ""
+}
+
 func main() {
 	makeConn()
 }

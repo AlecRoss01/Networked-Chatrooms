@@ -68,6 +68,11 @@ func diceRoll() int {
 	return result
 }
 
+func commandHandler(command string) string {
+
+	return ""
+}
+
 func main() {
 	makeConn()
 }

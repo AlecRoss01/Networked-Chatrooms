@@ -1,23 +1,26 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"math/rand"
 	"net"
 	"os"
-	"bufio"
+	"time"
 	//"strings"
 )
+
 func makeConn() {
 	conn, err := net.Dial("tcp", "127.0.0.1:30000")
 	if err != nil {
 		fmt.Println(err)
-	return
+		return
 	}
-	val, err := conn.Write([]byte(readInput()));
+	val, err := conn.Write([]byte(readInput()))
 	if err != nil {
 		fmt.Println(err)
 		fmt.Print(val)
-	return
+		return
 	}
 	readConn(conn)
 }
@@ -37,15 +40,32 @@ func readInput() string {
 }
 
 func thirdPerson(text string, name string) string {
-	return ""
+	return name + " " + text
 }
 
 func coinFlip() string {
-	return ""
+	// Seed the random number generator with the current time
+	rand.Seed(time.Now().UnixNano())
+
+	// Generate a random number between 0 and 1
+	result := rand.Intn(2)
+
+	// If the result is 0, return "heads", otherwise return "tails"
+	if result == 0 {
+		return "heads"
+	} else {
+		return "tails"
+	}
 }
 
 func diceRoll() int {
-	return 0
+	// Seed the random number generator with the current time
+	rand.Seed(time.Now().UnixNano())
+
+	// Generate a random number between 1 and 6
+	result := rand.Intn(6) + 1
+
+	return result
 }
 
 func main() {

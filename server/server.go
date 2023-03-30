@@ -1,9 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"net"
-	"bufio"
 )
 
 func tcpHandler() {
@@ -20,7 +20,8 @@ func tcpHandler() {
 		return
 	}
 	readConn(c)
-	c.Write([]byte("Hello!"))
+	c.Write([]byte("Hello!\n"))
+	c.Close()
 }
 
 func readConn(c net.Conn) {

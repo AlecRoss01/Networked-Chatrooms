@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestThirdPerson(t *testing.T) {
 	want := "Alec likes dogs"

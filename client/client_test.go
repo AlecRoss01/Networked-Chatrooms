@@ -51,3 +51,15 @@ func TestEchoCommand(t *testing.T) {
 		t.Errorf("got = %q, want %q", got, want)
 	}
 }
+
+func TestFormatUsers(t *testing.T) {
+	users := []User{User{"AlecRoss"}, User{"HunterGale"}, User{"BrianHall"}}
+	want := "Users in Chatroom:\n"
+	want += "AlecRoss\n"
+	want += "HunterGale\n"
+	want += "BrianHall\n"
+	got := formatUserList(users)
+	if got != want {
+		t.Errorf("got = %q, want %q", got, want)
+	}
+}

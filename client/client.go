@@ -110,12 +110,17 @@ func diceRoll() int {
 	return result
 }
 
-func commandHandler(command string) string {
+func commandHandler(command string, users []User) string {
 	echo := "!echo "
+	listUsers := "!users"
 	if strings.Contains(command, echo) {
 		location := strings.Index(command, echo)
 		return command[location+len(echo):] + "\n"
 	}
+	if strings.Contains(command, listUsers) {
+		return formatUserList(users)
+	}
+
 	return ""
 }
 

@@ -120,7 +120,13 @@ func commandHandler(command string) string {
 }
 
 func formatUserList(users []User) string {
-	return ""
+	var sb strings.Builder
+	sb.WriteString("Users in Chatroom:\n")
+	for _, user := range users {
+		sb.WriteString(user.Username)
+		sb.WriteByte('\n')
+	}
+	return sb.String()
 }
 
 func main() {

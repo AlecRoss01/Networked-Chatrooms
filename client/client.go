@@ -10,30 +10,72 @@ import (
 	"time"
 )
 
-func makeConn() {
+type User struct {
+	Username string
+}
+
+func makeConn() net.Conn {
 	conn, err := net.Dial("tcp", "127.0.0.1:30000")
 	if err != nil {
 		fmt.Println(err)
-		return
 	}
-	val, err := conn.Write([]byte(readInput()))
-	if err != nil {
-		fmt.Println(err)
-		fmt.Print(val)
-		return
-	}
-	readConn(conn)
+	return conn
 }
 
-func readConn(c net.Conn) {
+func joinChatroom() {
+	c := makeConn()
+	data := make(chan string, 100)
+	exit := make(chan string)
+	go readConn(c, exit, data)
+	fmt.Println("Welcome to the chatroom!")
+	for {
+		select {
+		case message := <-data:
+			fmt.Print(message)
+		printall:
+			for {
+				select {
+				case message := <-data:
+					fmt.Print(message)
+				default:
+					break printall
+				}
+			}
+
+		default:
+		}
+		input := readInput()
+		val, err := c.Write([]byte(input))
+		if err != nil {
+			fmt.Println(err)
+			fmt.Print(val)
+			return
+		} else if input == "!exit\n" {
+			exit <- "done"
+			return
+		}
+	}
+}
+
+func readConn(c net.Conn, exit chan string, data chan string) {
 	reader := bufio.NewReader(c)
 	message, _ := reader.ReadString('\n')
-	fmt.Println(message)
+	fmt.Print(message)
+	if message != "\n" {
+		//fmt.Print(message)
+		data <- message
+	}
+	select {
+	case <-exit:
+		c.Close()
+		return
+	default:
+	}
+
 }
 
 func readInput() string {
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("Welcome to the chatroom!")
 	text, _ := reader.ReadString('\n')
 	//text = strings.Replace(text, "\n", "", -1)
 	return text
@@ -77,6 +119,10 @@ func commandHandler(command string) string {
 	return ""
 }
 
+func formatUserList(users []User) string {
+	return ""
+}
+
 func main() {
-	makeConn()
+	joinChatroom()
 }
